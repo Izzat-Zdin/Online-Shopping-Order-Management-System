@@ -186,7 +186,6 @@ void sortingMenu() {
         cout << "  [1] Insertion Sort\n";
         cout << "  [2] Quick Sort\n";
         cout << "  [3] Compare Both Algorithms\n";
-        cout << "  [4] Display First 100 Sorted Orders\n";
         cout << "  [0] Back to Main Menu\n";
         cout << "============================================================\n";
         cout << "  Enter choice: ";
@@ -259,7 +258,6 @@ void sortingMenu() {
                 break;
             }
                 
-            case 4: displayFirstNOrders(DISPLAY_LIMIT, true); break;
             case 0: break;
             default: cout << "\n  Invalid choice!\n"; pause();
         }
@@ -283,7 +281,6 @@ void searchingMenu() {
         cout << "  [1] Linear Search\n";
         cout << "  [2] Binary Search\n";
         cout << "  [3] Optimized Linear Search (Sentinel)\n";
-        cout << "  [4] Perform 100 Search Operations\n";
         cout << "  [0] Back to Main Menu\n";
         cout << "============================================================\n";
         cout << "  Enter choice: ";
@@ -293,7 +290,6 @@ void searchingMenu() {
             case 1: linearSearch(); break;
             case 2: binarySearch(); break;
             case 3: optimizedLinearSearch(); break;
-            case 4: performMultipleSearches(); break;
             case 0: break;
             default: cout << "\n  Invalid choice!\n"; pause();
         }
@@ -736,56 +732,6 @@ void optimizedLinearSearch() {
     pause();
 }
 
-void performMultipleSearches() {
-    clearScreen();
-    cout << "\n  Performing 100 search operations...\n\n";
-    
-    Order** arr = convertToArray();
-    int foundCount = 0;
-    double totalTime = 0;
-    
-    for(int i = 0; i < 100; i++) {
-        int randomIndex = rand() % orderCount;
-        int searchOrderID = arr[randomIndex]->orderID;
-        string searchName = arr[randomIndex]->customerName;
-        
-        auto start = high_resolution_clock::now();
-        
-        Order* current = orderList;
-        bool found = false;
-        
-        while(current != nullptr) {
-            if(current->orderID == searchOrderID && current->customerName == searchName) {
-                found = true;
-                break;
-            }
-            current = current->next;
-        }
-        
-        auto end = high_resolution_clock::now();
-        double executionTime = duration_cast<microseconds>(end - start).count() / 1000.0;
-        
-        totalTime += executionTime;
-        if(found) foundCount++;
-        
-        if((i + 1) % 10 == 0) {
-            cout << "  Progress: " << (i + 1) << " searches completed...\n";
-        }
-    }
-    
-    cout << "\n  ==============================================================\n";
-    cout << "              100 SEARCH OPERATIONS RESULTS                  \n";
-    cout << "  ==============================================================\n";
-    cout << "    Total Searches: 100\n";
-    cout << "    Found: " << foundCount << "\n";
-    cout << "    Not Found: " << (100 - foundCount) << "\n";
-    cout << "    Total Time: " << fixed << setprecision(2) << totalTime << " ms\n";
-    cout << "    Average Time: " << fixed << setprecision(4) << (totalTime / 100) << " ms\n";
-    cout << "  ==============================================================\n";
-    
-    delete[] arr;
-    pause();
-}
 
 void calculateTotalSales() {
     clearScreen();
